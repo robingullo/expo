@@ -8,6 +8,7 @@
 
 ### 🐛 Bug fixes
 
+- Preserve device when passed as `AppleDeviceManager` instance in `resolveAsync` ([#43446](https://github.com/expo/expo/pull/43446) by [@robingullo](https://github.com/robingullo))
 - Correctly handle JavaScript assets when `asyncRoutes: true` in SSR ([#43446](https://github.com/expo/expo/pull/43446) by [@hassankhan](https://github.com/hassankhan))`
 
 ### 💡 Others

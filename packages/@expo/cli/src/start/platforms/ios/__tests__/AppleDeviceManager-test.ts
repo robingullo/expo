@@ -8,11 +8,36 @@ jest.mock('../simctl', () => ({
   getInfoPlistValueAsync: jest.fn(),
 }));
 
+jest.mock('../simctl', () => ({
+  openAppIdAsync: jest.fn(),
+  openUrlAsync: jest.fn(),
+  getInfoPlistValueAsync: jest.fn(),
+  bootAsync: jest.fn(),
+}));
+
+jest.mock('../getBestSimulator', () => ({
+  getBestBootedSimulatorAsync: jest.fn(),
+  getBestUnbootedSimulatorAsync: jest.fn(),
+  getSelectableSimulatorsAsync: jest.fn(),
+}));
+
+jest.mock('../promptAppleDevice', () => ({
+  promptAppleDeviceAsync: jest.fn(),
+}));
+
 const asDevice = (device: Partial<Device>): Device => device as Device;
 
 function createDevice() {
   return new AppleDeviceManager(asDevice({ name: 'iPhone 13', udid: '123' }));
 }
+
+describe('resolveAsync', () => {
+  it(`returns the device directly if already an AppleDeviceManager instance`, async () => {
+    const existingDevice = createDevice();
+    const result = await AppleDeviceManager.resolveAsync({ device: existingDevice as any });
+    expect(result).toBe(existingDevice);
+  });
+});
 
 describe('getAppVersionAsync', () => {
   it(`gets the version from an installed app`, async () => {

@@ -79,6 +79,11 @@ export class AppleDeviceManager extends DeviceManager<SimControl.Device> {
   }: BaseResolveDeviceProps<
     Partial<Pick<SimControl.Device, 'udid' | 'osType'>>
   > = {}): Promise<AppleDeviceManager> {
+    // If device is already an AppleDeviceManager instance, return it directly
+    if (device instanceof AppleDeviceManager) {
+      return device;
+    }
+
     if (shouldPrompt) {
       const devices = await getSelectableSimulatorsAsync(device);
       device = await promptAppleDeviceAsync(devices, device?.osType);
